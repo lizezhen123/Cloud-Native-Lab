@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+cd ./yys/lab1/middlewares
 # 检测是否安装了docker
 if ! [ -x "$(command -v docker)" ]; then
   echo 'Error: docker is not installed.' >&2
