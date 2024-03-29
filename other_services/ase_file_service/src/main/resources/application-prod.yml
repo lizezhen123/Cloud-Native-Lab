@@ -1,0 +1,27 @@
+server:
+  port: 8084
+spring:
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+  application:
+    name: ase-file-service
+  cloud:
+    nacos:
+      discovery:
+        username: nacos
+        password: nacos
+        server-addr: ${NACOS_HOST:127.0.0.1}:${NACOS_PORT:8848}
+        
+dubbo:
+  application:
+    name: ase-file-service-dubbo
+    qos-port: 22226
+    serialize-check-status: WARN
+  protocol:
+    name: dubbo
+    port: -1
+  registry:
+    address: nacos://${NACOS_HOST:127.0.0.1}:${NACOS_PORT:8848}
+    username: nacos
+    password: nacos
+

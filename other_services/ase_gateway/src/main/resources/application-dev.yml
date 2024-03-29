@@ -1,0 +1,48 @@
+spring:
+  main:
+    web-application-type: reactive
+  application:
+    name: ase-gateway
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOriginPatterns: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+            allowCredentials: true
+        add-to-simple-url-handler-mapping: true
+      loadbalancer:
+        use404: true # 如果找不到服务，就返回404(默认是503)
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: user_service_route
+          uri: lb://ase-user-service
+          predicates:
+            - Path=/user/**
+        - id: notification_service_route
+          uri: lb://ase-notification-service
+          predicates:
+            - Path=/notification/**
+        - id: conference_service_route
+          uri: lb://ase-conference-service
+          predicates:
+            - Path=/conference/**
+        - id: contribute_service_route
+          uri: lb://ase-contribute-service
+          predicates:
+            - Path=/contribute/**
+        - id: file_service_route
+          uri: lb://ase-file-service
+          predicates:
+            - Path=/file/**
+    nacos:
+      discovery:
+        username: nacos
+        password: nacos
+        server-addr: ${NACOS_HOST:127.0.0.1}:${NACOS_PORT:8848}
+server:
+  port: 8080
